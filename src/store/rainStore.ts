@@ -29,7 +29,7 @@ export const useRainStore = create<RainStore>((set) => ({
 		try {
 			set({ loading: true, error: null });
 			const res = await axios.get(
-				"https://misterteedata-production.up.railway.app/rain",
+				"http://localhost:3000/rain",
 				{
 					params: { start_date, end_date, type },
 				}

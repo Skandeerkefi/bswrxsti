@@ -12,7 +12,7 @@ function CasinoBackground() {
 					const cx = Math.random() * 100;
 					const cy = Math.random() * 100;
 					const r = Math.random() * 0.8 + 0.2;
-					return <circle key={i} cx={cx} cy={cy} r={r} fill='#000000' />;
+					return <circle key={i} cx={cx} cy={cy} r={r} fill='#0E0D1D' />;
 				})}
 			</svg>
 
@@ -28,24 +28,24 @@ function CasinoBackground() {
 					cx='32'
 					cy='32'
 					r='30'
-					stroke='#000000'
+					stroke='#0E0D1D'
 					strokeWidth='2'
-					fill='#F5F5F5'
+					fill='#FEFDDE'
 				/>
 				<circle
 					cx='32'
 					cy='32'
 					r='20'
-					stroke='#000000'
+					stroke='#0E0D1D'
 					strokeWidth='1'
-					fill='#E0E0E0'
+					fill='#FEFDDE'
 				/>
 				<text
 					x='32'
 					y='38'
 					textAnchor='middle'
 					fontSize='18'
-					fill='#000000'
+					fill='#0E0D1D'
 					fontWeight='bold'
 					fontFamily='Arial'
 				>

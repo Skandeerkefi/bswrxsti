@@ -55,7 +55,7 @@ const ClashLeaderboardPage = () => {
         </h1>
 
         {loading && !error && <p className="text-center text-white">Loading leaderboard...</p>}
-        {error && <p className="text-center text-red-500">Error: {error}</p>}
+        {error && <p className="text-center text-[#D2758F]">Error: {error}</p>}
 
         {!loading && !error && startDate && endDate && (
           <p className="text-center text-white mb-4">
@@ -67,11 +67,11 @@ const ClashLeaderboardPage = () => {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-separate border-spacing-0 text-white shadow-xl rounded-xl overflow-hidden backdrop-blur-xl bg-white/5">
               <thead>
-                <tr className="bg-gradient-to-r from-red-700 to-red-900 text-white">
-                  <th className="p-3 border-b border-red-600 font-semibold text-center">Place</th>
-                  <th className="p-3 border-b border-red-600 font-semibold">Username</th>
-                  <th className="p-3 border-b border-red-600 font-semibold text-center">Wagered</th>
-                  <th className="p-3 border-b border-red-600 font-semibold text-center">Prize</th>
+                <tr className="bg-gradient-to-r from-[#381835] to-[#0E0D1D] text-white">
+                  <th className="p-3 border-b border-[#D2758F] font-semibold text-center">Place</th>
+                  <th className="p-3 border-b border-[#D2758F] font-semibold">Username</th>
+                  <th className="p-3 border-b border-[#D2758F] font-semibold text-center">Wagered</th>
+                  <th className="p-3 border-b border-[#D2758F] font-semibold text-center">Prize</th>
                 </tr>
               </thead>
 
@@ -79,9 +79,9 @@ const ClashLeaderboardPage = () => {
   {sortedPlayers.map((player, index) => (
     <tr
       key={player.userId}
-      className={`transition duration-200 hover:bg-red-900/40 ${index % 2 === 0 ? "bg-white/5" : "bg-white/10"}`}
+      className={`transition duration-200 hover:bg-[#0E0D1D]/40 ${index % 2 === 0 ? "bg-white/5" : "bg-white/10"}`}
     >
-      <td className="p-3 border-b border-gray-700 text-center font-semibold text-red-400">
+      <td className="p-3 border-b border-gray-700 text-center font-semibold text-[#D2758F]">
         #{index + 1}
       </td>
       <td className="p-3 border-b border-gray-700 font-medium">{player.name}</td>

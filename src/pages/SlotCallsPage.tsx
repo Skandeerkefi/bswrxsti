@@ -195,12 +195,12 @@ function SlotCallsPage() {
 						<DialogTrigger asChild>
 							<Button
 								variant='outline'
-								className='flex items-center gap-2 border-[#ff0000] text-[#000000] hover:bg-[#AF2D03] bg-white'
+								className='flex items-center gap-2 border-[#D2758F] text-[#0E0D1D] hover:bg-[#D2758F] bg-white'
 							>
 								<Plus className='w-4 h-4' /> New Slot Call
 							</Button>
 						</DialogTrigger>
-						<DialogContent className='bg-[#000000] text-white border border-[#ff0000]'>
+						<DialogContent className='bg-[#0E0D1D] text-white border border-[#D2758F]'>
 							<DialogHeader>
 								<DialogTitle>New Slot Call</DialogTitle>
 								<DialogDescription>
@@ -213,13 +213,13 @@ function SlotCallsPage() {
 									value={slotName}
 									onChange={(e) => setSlotName(e.target.value)}
 									disabled={isSubmitting}
-									className='bg-[#ffffff] text-black border border-[#ff0000]'
+									className='bg-[#FEFDDE] text-black border border-[#D2758F]'
 								/>
 								<DialogFooter>
 									<Button
 										onClick={handleSubmit}
 										disabled={isSubmitting || !slotName.trim()}
-										className='text-black bg-[#ff0000] hover:bg-[#ffffff]'
+										className='text-black bg-[#D2758F] hover:bg-[#FEFDDE]'
 									>
 										Submit
 									</Button>
@@ -234,7 +234,7 @@ function SlotCallsPage() {
 						placeholder='Search slot name or requester...'
 						value={searchQuery}
 						onChange={(e) => setSearchQuery(e.target.value)}
-						className='flex-grow max-w-sm bg-[#ffffff] text-white border border-[#ff0000]'
+						className='flex-grow max-w-sm bg-[#FEFDDE] text-white border border-[#D2758F]'
 					/>
 
 					<Tabs
@@ -242,55 +242,55 @@ function SlotCallsPage() {
 						onValueChange={(val) => setFilter(val as FilterStatus)}
 						className='flex-grow max-w-lg'
 					>
-						<TabsList className='border-b border-[#ff0000] bg-black'>
+						<TabsList className='border-b border-[#D2758F] bg-black'>
 							<TabsTrigger
 								value='all'
-								className='text-[#ffffff] data-[state=active]:bg-[#ffffff] data-[state=active]:text-black'
+								className='text-[#FEFDDE] data-[state=active]:bg-[#FEFDDE] data-[state=active]:text-black'
 							>
 								All
 							</TabsTrigger>
 							<TabsTrigger
 								value='pending'
-								className='text-[#ffffff] data-[state=active]:bg-[#ffffff] data-[state=active]:text-black'
+								className='text-[#FEFDDE] data-[state=active]:bg-[#FEFDDE] data-[state=active]:text-black'
 							>
 								Pending
 							</TabsTrigger>
 							<TabsTrigger
 								value='accepted'
-								className='text-[#ffffff] data-[state=active]:bg-[#ffffff] data-[state=active]:text-black'
+								className='text-[#FEFDDE] data-[state=active]:bg-[#FEFDDE] data-[state=active]:text-black'
 							>
 								Accepted
 							</TabsTrigger>
 							<TabsTrigger
 								value='played'
-								className='text-[#ffffff] data-[state=active]:bg-[#ffffff] data-[state=active]:text-black'
+								className='text-[#FEFDDE] data-[state=active]:bg-[#FEFDDE] data-[state=active]:text-black'
 							>
 								Played
 							</TabsTrigger>
 							<TabsTrigger
 								value='rejected'
-								className='text-[#ffffff] data-[state=active]:bg-[#ffffff] data-[state=active]:text-black'
+								className='text-[#FEFDDE] data-[state=active]:bg-[#FEFDDE] data-[state=active]:text-black'
 							>
 								Rejected
 							</TabsTrigger>
 						</TabsList>
 					</Tabs>
 
-					<label className='flex items-center gap-2 text-sm text-[#ffffff]'>
+					<label className='flex items-center gap-2 text-sm text-[#FEFDDE]'>
 						<input
 							type='checkbox'
 							checked={showOnly250Hit}
 							onChange={(e) => setShowOnly250Hit(e.target.checked)}
-							className='accent-[#ff0000]'
+							className='accent-[#D2758F]'
 						/>
 						Show only 250x Hit
 					</label>
 				</div>
 
 				{isLoading ? (
-					<div className='text-center text-[#ff0000]/70'>Loading...</div>
+					<div className='text-center text-[#D2758F]/70'>Loading...</div>
 				) : filteredSlotCalls.length === 0 ? (
-					<div className='text-center text-[#ff0000]/70'>
+					<div className='text-center text-[#D2758F]/70'>
 						No slot calls found.
 					</div>
 				) : (

@@ -20,7 +20,7 @@ export function Navbar() {
 	useEffect(() => {
 		const fetchLiveStatus = async () => {
 			try {
-				const res = await fetch("https://kick.com/api/v2/channels/MisterTee");
+				const res = await fetch("https://kick.com/api/v2/channels/bswrxsti");
 				const data = await res.json();
 
 				if (data.livestream) {
@@ -42,16 +42,7 @@ export function Navbar() {
 
 	const menuItems = [
 		{ path: "/", name: "Home", icon: <Dices className='w-5 h-5' /> },
-		{
-			name: "Leaderboard",
-			icon: <Crown className='w-5 h-5' />,
-			subMenu: [
-				
-				{ name: "Roobet", path: "/leaderboards" },
-				// { name: "Packdraw", path:"/packdraw"},
-				{ name: "CSGOWin", path:"/leaderboard"},
-			],
-		},
+		{ path: "/leaderboards", name: "Leaderboard", icon: <Crown className='w-5 h-5' /> },
 		{
 			path: "/slot-calls",
 			name: "Slot Calls",
@@ -65,124 +56,117 @@ export function Navbar() {
 	];
 
 	return (
-		<nav className='sticky top-0 z-50 bg-black border-b border-gray-800 shadow-lg bg-opacity-90 backdrop-blur-md'>
-			<div className='container flex items-center justify-between px-6 py-4 mx-auto'>
+		<nav className='sticky top-0 z-50 bg-gradient-to-r from-[#0E0D1D] to-[#1a191f] border-b border-[#D2758F]/20 shadow-2xl backdrop-blur-md'>
+			<div className='flex items-center justify-between w-full px-4 py-3 mx-auto sm:px-6 sm:py-4 max-w-7xl'>
 				{/* Logo */}
-				<Link to='/' className='flex items-center space-x-3 select-none'>
-					<img
-						src='https://i.ibb.co/x8zPpn5p/Capture-d-cran-2025-08-08-180638.png'
-						alt='MisterTee Logo'
-						className='w-10 h-10 rounded-full border-2 border-[#E10600] shadow-sm object-cover'
-					/>
-					<span className='text-3xl font-extrabold italic tracking-wide text-[#E10600] [text-shadow:2px_2px_4px_black]'>
-						Mister<span className='text-white'>Tee</span>
-					</span>
-				</Link>
+			<Link to='/' className='flex items-center flex-shrink-0 gap-2 transition-opacity select-none sm:gap-3 hover:opacity-80'>
+				<img
+					src='https://i.ibb.co/k68Syzgq/IMG-6134.jpg'
+					alt='Bswrxsti Logo'
+					className='w-9 sm:w-12 h-9 sm:h-12 rounded-full border-2 border-[#D2758F] shadow-lg object-cover hover:border-[#FEFDDE] transition-colors'
+				/>
+				<div className='hidden sm:block'>
+					<span className='text-lg sm:text-2xl font-black tracking-tight text-[#D2758F]'>Bswrx</span>
+					<span className='text-lg sm:text-2xl font-black tracking-tight text-[#FEFDDE]'>sti</span>
+				</div>
+			</Link>
 
 				{/* Desktop Menu */}
 				{!isMobile && (
-					<div className='flex items-center space-x-10'>
-						<ul className='flex space-x-8 font-medium text-white'>
-							{menuItems.map((item) => (
-								<li key={item.name} className='relative group'>
-									{item.subMenu ? (
-										<>
-											<span className='flex items-center space-x-2 text-lg px-1 cursor-pointer hover:border-[#E10600]'>
-												{item.icon} <span>{item.name}</span>
-											</span>
-											{/* Dropdown */}
-											<ul className='absolute left-0 w-40 mt-2 transition-opacity bg-black border border-gray-700 rounded-md shadow-lg opacity-0 group-hover:opacity-100'>
-												{item.subMenu.map((sub) => (
-													<li key={sub.path}>
-														<Link
-															to={sub.path}
-															className='block px-4 py-2 text-white hover:bg-[#E10600] hover:text-white transition-colors'
-														>
-															{sub.name}
-														</Link>
-													</li>
-												))}
-											</ul>
-										</>
-									) : (
-										<Link
-											to={item.path}
-											className={`flex items-center space-x-2 text-lg px-1 border-b-2 border-transparent transition-all duration-300 hover:border-[#E10600] ${
-												location.pathname === item.path
-													? "border-[#E10600]"
-													: ""
-											}`}
-										>
-											{item.icon} <span>{item.name}</span>
-										</Link>
-									)}
-								</li>
-							))}
-						</ul>
+				<div className='flex items-center gap-6 ml-auto lg:gap-12'>
+					<ul className='flex gap-1 lg:gap-2'>
+						{menuItems.map((item) => (
+							<li key={item.name}>
+								<Link
+									to={item.path}
+									className={`flex items-center gap-2 px-2.5 lg:px-4 py-2 lg:py-2.5 text-xs lg:text-sm font-semibold rounded-lg transition-all duration-300 ${
+										location.pathname === item.path
+											? "bg-[#D2758F] text-white shadow-lg shadow-[#D2758F]/50"
+											: "text-[#FEFDDE] hover:bg-[#D2758F]/20 hover:text-[#D2758F]"
+									}`}
+								>
+									{item.icon}
+									<span className='hidden lg:inline'>{item.name}</span>
+								</Link>
+							</li>
+						))}
+					</ul>
 
-						{/* User controls */}
-						<div className='flex items-center space-x-5'>
-							{user ? (
-								<>
-									<Link
-										to='/profile'
-										className='flex items-center space-x-2 text-white hover:text-[#E10600] font-semibold'
-									>
-										<User className='w-5 h-5' />
-										<span>{user.username}</span>
-									</Link>
-									<button
-										onClick={logout}
-										className='flex items-center space-x-2 bg-[#E10600] hover:bg-[#b00500] text-white px-4 py-1.5 rounded-md font-semibold transition'
-									>
-										<LogOut className='w-5 h-5' />
-										<span>Logout</span>
-									</button>
-								</>
-							) : (
-								<>
-									<Link
-										to='/login'
-										className='flex items-center space-x-2 border border-[#E10600] text-[#E10600] hover:bg-[#E10600] hover:text-white px-4 py-1.5 rounded-md font-semibold transition'
-									>
-										<LogIn className='w-5 h-5' />
-										<span>Login</span>
-									</Link>
-									<Link
-										to='/signup'
-										className='text-white font-semibold hover:text-[#E10600] transition'
-									>
-										Sign Up
-									</Link>
-								</>
-							)}
-						</div>
+					{/* User controls */}
+					<div className='flex items-center gap-2 lg:gap-3 pl-4 lg:pl-6 border-l border-[#D2758F]/20'>
+						{user ? (
+							<>
+								<Link
+									to='/profile'
+									className='hidden sm:flex items-center gap-2 text-[#FEFDDE] hover:text-[#D2758F] font-semibold transition text-xs lg:text-sm'
+								>
+									<User className='w-4 h-4' />
+									<span className='hidden lg:inline'>{user.username}</span>
+								</Link>
+								<button
+									onClick={logout}
+									className='flex items-center gap-1 lg:gap-2 bg-[#D2758F] hover:bg-[#C1536E] text-white px-2 lg:px-3 py-1.5 rounded-lg font-semibold transition text-xs lg:text-sm'
+								>
+									<LogOut className='w-3 h-3 lg:w-4 lg:h-4' />
+									<span className='hidden lg:inline'>Logout</span>
+								</button>
+							</>
+						) : (
+							<>
+								<Link
+									to='/login'
+									className='flex items-center gap-1 lg:gap-2 border border-[#D2758F] text-[#D2758F] hover:bg-[#D2758F] hover:text-white px-2 lg:px-3 py-1.5 rounded-lg font-semibold transition text-xs lg:text-sm'
+								>
+									<LogIn className='w-3 h-3 lg:w-4 lg:h-4' />
+									<span className='hidden lg:inline'>Login</span>
+								</Link>
+								<Link
+									to='/signup'
+									className='hidden sm:block text-[#FEFDDE] font-semibold hover:text-[#D2758F] transition text-xs lg:text-sm px-2'
+								>
+									Sign Up
+								</Link>
+							</>
+						)}
 					</div>
-				)}
 
-				{/* Live Status */}
-				<div
-					className={`ml-6 px-4 py-1 rounded-full text-sm font-bold select-none ${
-						isLive
-							? "bg-red-600 text-white shadow-lg animate-pulse"
-							: "bg-gray-700 text-gray-300"
-					}`}
-					title={isLive ? "Currently Live" : "Offline"}
-				>
-					{isLive ? (
-						<>
-							<span role='img' aria-label='Live'>
-								🔴
-							</span>{" "}
-							LIVE {viewerCount !== null ? `(${viewerCount})` : ""}
-						</>
-					) : (
-						"Offline"
-					)}
+					{/* Live Status */}
+					<div
+						className={`px-2.5 lg:px-4 py-1 lg:py-2 rounded-full text-xs font-bold select-none flex-shrink-0 ${
+							isLive
+								? "bg-[#D2758F] text-white shadow-lg shadow-[#D2758F]/50 animate-pulse"
+								: "bg-gray-700/40 text-gray-400"
+						}`}
+						title={isLive ? "Currently Live" : "Offline"}
+					>
+						{isLive ? (
+							<>
+								<span role='img' aria-label='Live'>
+									🔴
+								</span>{" "}
+								<span className='hidden sm:inline'>LIVE {viewerCount !== null ? `(${viewerCount})` : ""}</span>
+							</>
+						) : (
+							<span className='hidden sm:inline'>Offline</span>
+						)}
+					</div>
 				</div>
+			)}
 
-				{/* Mobile Hamburger */}
-				{isMobile && (
+			{/* Mobile Hamburger */}
+			{isMobile && (
+				<div className='flex items-center gap-2 ml-auto'>
+					{/* Mobile Live Status Indicator */}
+					<div
+						className={`px-2 py-1.5 rounded-full text-xs font-bold flex-shrink-0 ${
+							isLive
+								? "bg-[#D2758F] text-white animate-pulse"
+								: "bg-gray-700/40 text-gray-400"
+						}`}
+						title={isLive ? "Currently Live" : "Offline"}
+					>
+						🔴
+					</div>
 					<button
 						onClick={() => setIsOpen(!isOpen)}
 						aria-label='Toggle menu'
@@ -205,13 +189,13 @@ export function Navbar() {
 							}`}
 						/>
 					</button>
-				)}
-			</div>
+				</div>
+			)}
 
 			{/* Mobile Dropdown Menu */}
 			{isMobile && (
 				<div
-					className={`fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm z-40 transition-opacity duration-300 ${
+					className={`fixed inset-0 bg-black/80 backdrop-blur-sm z-40 transition-opacity duration-300 ${
 						isOpen
 							? "opacity-100 pointer-events-auto"
 							: "opacity-0 pointer-events-none"
@@ -219,55 +203,39 @@ export function Navbar() {
 					onClick={() => setIsOpen(false)}
 				>
 					<div
-						className={`absolute top-0 right-0 w-64 bg-[#111] h-full shadow-lg py-6 px-6 flex flex-col space-y-6 transform transition-transform duration-300 ${
+						className={`absolute top-0 right-0 w-72 bg-gradient-to-b from-[#0E0D1D] to-[#1a191f] h-full shadow-2xl py-6 px-6 flex flex-col space-y-4 transform transition-transform duration-300 ${
 							isOpen ? "translate-x-0" : "translate-x-full"
 						}`}
 						onClick={(e) => e.stopPropagation()}
 					>
-						<ul className='flex flex-col space-y-4 font-semibold text-white'>
+						<ul className='flex flex-col space-y-2 font-semibold text-[#FEFDDE]'>
 							{menuItems.map((item) => (
 								<li key={item.name}>
-									{item.subMenu ? (
-										<>
-											<span className='flex items-center space-x-3 text-lg px-2 py-2 rounded-md cursor-pointer hover:bg-[#E10600] hover:text-white transition-colors'>
-												{item.icon} <span>{item.name}</span>
-											</span>
-											<ul className='pl-6 mt-1 space-y-1'>
-												{item.subMenu.map((sub) => (
-													<li key={sub.path}>
-														<Link
-															to={sub.path}
-															onClick={() => setIsOpen(false)}
-															className='block text-white hover:text-[#E10600] transition-colors'
-														>
-															{sub.name}
-														</Link>
-													</li>
-												))}
-											</ul>
-										</>
-									) : (
-										<Link
-											to={item.path}
-											onClick={() => setIsOpen(false)}
-											className='flex items-center space-x-3 text-lg px-2 py-2 rounded-md hover:bg-[#E10600] hover:text-white transition-colors'
-										>
-											{item.icon} <span>{item.name}</span>
-										</Link>
-									)}
+									<Link
+										to={item.path}
+										onClick={() => setIsOpen(false)}
+										className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${
+											location.pathname === item.path
+												? "bg-[#D2758F] text-white shadow-lg"
+												: "hover:bg-[#D2758F]/20 hover:text-[#D2758F]"
+										}`}
+									>
+										{item.icon}
+										<span>{item.name}</span>
+									</Link>
 								</li>
 							))}
 						</ul>
 
-						<div className='mt-auto space-y-4'>
+						<div className='mt-8 pt-6 border-t border-[#D2758F]/20 space-y-3'>
 							{user ? (
 								<>
 									<Link
 										to='/profile'
 										onClick={() => setIsOpen(false)}
-										className='flex items-center space-x-3 text-white text-lg font-semibold hover:text-[#E10600] transition'
+										className='flex items-center gap-3 text-[#FEFDDE] text-base font-semibold hover:text-[#D2758F] transition px-4 py-2'
 									>
-										<User className='w-6 h-6' />
+										<User className='w-5 h-5' />
 										<span>{user.username}</span>
 									</Link>
 									<button
@@ -275,9 +243,9 @@ export function Navbar() {
 											logout();
 											setIsOpen(false);
 										}}
-										className='w-full bg-[#E10600] hover:bg-[#b00500] text-white py-2 rounded-md font-semibold transition'
+										className='w-full bg-[#D2758F] hover:bg-[#C1536E] text-white py-2 px-4 rounded-lg font-semibold transition flex items-center justify-center gap-2'
 									>
-										<LogOut className='inline w-5 h-5 mr-2' />
+										<LogOut className='w-4 h-4' />
 										Logout
 									</button>
 								</>
@@ -286,15 +254,15 @@ export function Navbar() {
 									<Link
 										to='/login'
 										onClick={() => setIsOpen(false)}
-										className='flex items-center space-x-3 bg-[#E10600] hover:bg-[#b00500] text-white py-2 px-4 rounded-md font-semibold transition'
+										className='flex items-center justify-center gap-2 bg-[#D2758F] hover:bg-[#C1536E] text-white py-2 px-4 rounded-lg font-semibold transition w-full'
 									>
-										<LogIn className='w-5 h-5' />
+										<LogIn className='w-4 h-4' />
 										<span>Login</span>
 									</Link>
 									<Link
 										to='/signup'
 										onClick={() => setIsOpen(false)}
-										className='block text-center text-white font-semibold hover:text-[#E10600] transition'
+										className='block text-center text-[#FEFDDE] font-semibold hover:text-[#D2758F] transition py-2'
 									>
 										Sign Up
 									</Link>
@@ -304,6 +272,7 @@ export function Navbar() {
 					</div>
 				</div>
 			)}
+		</div>
 		</nav>
 	);
 }

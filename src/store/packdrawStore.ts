@@ -30,7 +30,7 @@ export const usePackdrawStore = create<PackdrawState>((set) => ({
     set({ loading: true, error: null });
 
     const res = await fetch(
-      `https://misterteedata-production.up.railway.app/api/packdraw?after=${afterISO}`
+      `http://localhost:3000/api/packdraw?after=${afterISO}`
     );
 
     const data = await res.json();

@@ -31,7 +31,7 @@ export function GraphicalBackground() {
 		const particles: Particle[] = [];
 		const particleCount = 40;
 		const colors = [
-			"rgba(255, 0, 0, ", // red
+			
 			"rgba(255, 255, 255, ", // white
 			"rgba(120, 120, 120, ", // gray
 		];
@@ -49,48 +49,9 @@ export function GraphicalBackground() {
 			});
 		}
 
-		// Floating T-shirts
-		interface FloatingItem {
-			x: number;
-			y: number;
-			size: number;
-			speedX: number;
-			speedY: number;
-			rotation: number;
-			rotationSpeed: number;
-			layer: number;
-			opacity: number;
-		}
-
-		const tshirtImage = new Image();
-		tshirtImage.src =
-			"https://i.ibb.co/ksFzpHVx/Capture-d-cran-2025-08-11-133856-removebg-preview.png";
-
-		const shirts: FloatingItem[] = [];
-		const shirtCount = 25;
-
-		for (let i = 0; i < shirtCount; i++) {
-			const layer = Math.floor(Math.random() * 3); // 0 = far, 2 = close
-			const baseSize = [50, 80, 120][layer];
-			shirts.push({
-				x: Math.random() * canvas.width,
-				y: Math.random() * canvas.height,
-				size: baseSize + Math.random() * 40,
-				speedX: (Math.random() - 0.5) * (0.1 + layer * 0.05),
-				speedY: (Math.random() - 0.5) * (0.1 + layer * 0.05),
-				rotation: Math.random() * Math.PI * 2,
-				rotationSpeed: (Math.random() - 0.5) * 0.002,
-				layer,
-				opacity: 0.3 + layer * 0.3,
-			});
-		}
-
-		let time = 0;
 		let animationFrameId: number;
 
 		const render = () => {
-			time += 0.01;
-
 			// Background
 			ctx.fillStyle = "rgba(0, 0, 0, 0.15)";
 			ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -111,43 +72,10 @@ export function GraphicalBackground() {
 				ctx.fill();
 			});
 
-			// Floating shirts
-			shirts.forEach((shirt, idx) => {
-				// Wavy motion
-				shirt.x +=
-					shirt.speedX + Math.sin(time + idx) * 0.1 * (shirt.layer + 1);
-				shirt.y +=
-					shirt.speedY + Math.cos(time + idx) * 0.1 * (shirt.layer + 1);
-				shirt.rotation += shirt.rotationSpeed;
-
-				if (shirt.x > canvas.width) shirt.x = -shirt.size;
-				if (shirt.x < -shirt.size) shirt.x = canvas.width;
-				if (shirt.y > canvas.height) shirt.y = -shirt.size;
-				if (shirt.y < -shirt.size) shirt.y = canvas.height;
-
-				ctx.save();
-				ctx.globalAlpha = shirt.opacity;
-				ctx.shadowColor = "rgba(0,0,0,0.5)";
-				ctx.shadowBlur = 15;
-
-				ctx.translate(shirt.x + shirt.size / 2, shirt.y + shirt.size / 2);
-				ctx.rotate(shirt.rotation);
-				ctx.drawImage(
-					tshirtImage,
-					-shirt.size / 2,
-					-shirt.size / 2,
-					shirt.size,
-					shirt.size
-				);
-				ctx.restore();
-			});
-
 			animationFrameId = requestAnimationFrame(render);
 		};
 
-		tshirtImage.onload = () => {
-			render();
-		};
+		render();
 
 		return () => {
 			window.removeEventListener("resize", resizeCanvas);

@@ -37,22 +37,22 @@ export function LeaderboardTable({ period, data }: LeaderboardTableProps) {
 	}
 
 	return (
-		<div className='overflow-x-auto rounded-2xl border-4 border-[#E10600] shadow-[0_0_12px_#E10600] bg-[#0d111c]'>
+		<div className='overflow-x-auto rounded-2xl border-4 border-[#D2758F] shadow-[0_0_12px_#D2758F] bg-[#0E0D1D]'>
 			{/* Transparent Gray Background covering full inside of border */}
 			<div className='bg-black/50 backdrop-blur-sm '>
 				<Table className='min-w-full'>
 					<TableHeader>
-						<TableRow className='bg-[#E10600]/20 hover:bg-[#ffff]/30 border-b border-white'>
-							<TableHead className='w-16 text-left text-[#FF4A00] font-semibold tracking-wide py-3 pl-6'>
+						<TableRow className='bg-[#D2758F]/20 hover:bg-[#FEFDDE]/30 border-b border-white'>
+							<TableHead className='w-16 text-left text-[#D2758F] font-semibold tracking-wide py-3 pl-6'>
 								Rank
 							</TableHead>
 							<TableHead className='py-3 pl-6 font-semibold tracking-wide text-left text-white'>
 								Player
 							</TableHead>
-							<TableHead className='text-right text-[#FF4A00] font-semibold tracking-wide py-3 pr-6'>
+							<TableHead className='text-right text-[#D2758F] font-semibold tracking-wide py-3 pr-6'>
 								Wager
 							</TableHead>
-							<TableHead className='text-right text-[#FF4A00] font-semibold tracking-wide py-3 pr-6'>
+							<TableHead className='text-right text-[#D2758F] font-semibold tracking-wide py-3 pr-6'>
 								Prize
 							</TableHead>
 						</TableRow>
@@ -65,19 +65,19 @@ export function LeaderboardTable({ period, data }: LeaderboardTableProps) {
 							return (
 								<TableRow
 									key={player.username}
-									className={`border-b border-[#E10600]/30  hover:bg-[#E10600]/10 cursor-default ${
-										player.isFeatured ? "bg-[#E10600]/15" : ""
+									className={`border-b border-[#D2758F]/30  hover:bg-[#D2758F]/10 cursor-default ${
+										player.isFeatured ? "bg-[#D2758F]/15" : ""
 									}`}
 								>
-									<TableCell className='py-3 pl-6 font-semibold text-[#FF4A00] text-center'>
+									<TableCell className='py-3 pl-6 font-semibold text-[#D2758F] text-center'>
 										{isTop3 ? (
 											<Crown
 												className={`inline-block h-5 w-5 ${
 													player.rank === 1
-														? "text-[#FF3500]"
+														? "text-[#D2758F]"
 														: player.rank === 2
-														? "text-[#FF6A00]"
-														: "text-[#FF8F4A]"
+														? "text-[#D2758F]"
+														: "text-[#D2758F]"
 												}`}
 												aria-label={`Rank ${player.rank}`}
 											/>
@@ -91,20 +91,20 @@ export function LeaderboardTable({ period, data }: LeaderboardTableProps) {
 										{player.isFeatured && (
 											<Badge
 												variant='outline'
-												className='text-[#E10600] border-[#E10600] ml-2 select-none'
+												className='text-[#D2758F] border-[#D2758F] ml-2 select-none'
 											>
 												Streamer
 											</Badge>
 										)}
 									</TableCell>
 
-									<TableCell className='py-3 pr-6 text-right text-[#FF4A00] font-mono font-semibold whitespace-nowrap'>
+									<TableCell className='py-3 pr-6 text-right text-[#D2758F] font-mono font-semibold whitespace-nowrap'>
 										${player.wager.toLocaleString()}
 									</TableCell>
 
 									<TableCell
 										className={`py-3 pr-6 text-right font-semibold whitespace-nowrap ${
-											prize > 0 ? "text-[#FF4A00]" : "text-white/50 italic"
+											prize > 0 ? "text-[#D2758F]" : "text-white/50 italic"
 										}`}
 									>
 										{prize > 0 ? `$${prize}` : "-"}

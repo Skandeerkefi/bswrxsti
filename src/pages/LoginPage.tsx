@@ -49,7 +49,7 @@ function LoginPage() {
 	};
 
 	return (
-		<div className='relative flex flex-col min-h-screen  text-[#000000]'>
+		<div className='relative flex flex-col min-h-screen  text-[#0E0D1D]'>
 			{/* Background Canvas */}
 			<div className='fixed inset-0 -z-10'>
 				<GraphicalBackground />
@@ -58,13 +58,13 @@ function LoginPage() {
 			<Navbar />
 
 			<main className='container relative z-10 flex items-center justify-center flex-grow py-12'>
-				<Card className='w-full max-w-md bg-[#F5F5F5] border border-[#E0E0E0] text-[#000000] shadow-md rounded-xl'>
+				<Card className='w-full max-w-md bg-[#FEFDDE] border border-[#FEFDDE] text-[#0E0D1D] shadow-md rounded-xl'>
 					<CardHeader className='space-y-1'>
 						<div className='flex items-center justify-center gap-2 mb-2'>
-							<LogIn className='w-6 h-6 text-[#000000]' />
-							<CardTitle className='text-2xl text-[#000000]'>Login</CardTitle>
+							<LogIn className='w-6 h-6 text-[#0E0D1D]' />
+							<CardTitle className='text-2xl text-[#0E0D1D]'>Login</CardTitle>
 						</div>
-						<CardDescription className='text-center text-[#000000]'>
+						<CardDescription className='text-center text-[#0E0D1D]'>
 							Enter your Kick username and password to access your account
 						</CardDescription>
 					</CardHeader>
@@ -72,7 +72,7 @@ function LoginPage() {
 					<form onSubmit={handleSubmit}>
 						<CardContent className='space-y-4'>
 							<div className='space-y-2'>
-								<Label htmlFor='username' className='text-[#000000]'>
+								<Label htmlFor='username' className='text-[#0E0D1D]'>
 									Kick Username
 								</Label>
 								<Input
@@ -81,18 +81,18 @@ function LoginPage() {
 									value={username}
 									onChange={(e) => setUsername(e.target.value)}
 									required
-									className='bg-[#FFFFFF] border border-[#E0E0E0] text-[#000000] placeholder:text-[#999999]'
+									className='bg-[#FEFDDE] border border-[#FEFDDE] text-[#0E0D1D] placeholder:text-[#999999]'
 								/>
 							</div>
 
 							<div className='space-y-2'>
 								<div className='flex items-center justify-between'>
-									<Label htmlFor='password' className='text-[#000000]'>
+									<Label htmlFor='password' className='text-[#0E0D1D]'>
 										Password
 									</Label>
 									<Link
 										to='/forgot-password'
-										className='text-xs text-[#000000] hover:underline'
+										className='text-xs text-[#0E0D1D] hover:underline'
 									>
 										Forgot password?
 									</Link>
@@ -104,7 +104,7 @@ function LoginPage() {
 									value={password}
 									onChange={(e) => setPassword(e.target.value)}
 									required
-									className='bg-[#FFFFFF] border border-[#E0E0E0] text-[#000000] placeholder:text-[#999999]'
+									className='bg-[#FEFDDE] border border-[#FEFDDE] text-[#0E0D1D] placeholder:text-[#999999]'
 								/>
 							</div>
 						</CardContent>
@@ -112,17 +112,17 @@ function LoginPage() {
 						<CardFooter className='flex flex-col space-y-4'>
 							<Button
 								type='submit'
-								className='w-full bg-[#000000] hover:bg-[#222222] text-[#FFFFFF]'
+								className='w-full bg-[#0E0D1D] hover:bg-[#222222] text-[#FEFDDE]'
 								disabled={isLoading}
 							>
 								{isLoading ? "Signing In..." : "Sign In"}
 							</Button>
 
-							<div className='text-sm text-center text-[#000000]'>
+							<div className='text-sm text-center text-[#0E0D1D]'>
 								Don't have an account?{" "}
 								<Link
 									to='/signup'
-									className='text-[#000000] font-semibold hover:underline'
+									className='text-[#0E0D1D] font-semibold hover:underline'
 								>
 									Sign Up
 								</Link>

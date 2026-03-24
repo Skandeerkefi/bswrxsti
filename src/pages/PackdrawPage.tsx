@@ -81,12 +81,12 @@ const PackdrawPage = () => {
 			<Navbar />
 
 			<main className="container flex-grow p-4 mx-auto">
-				<h1 className="mb-4 text-5xl font-extrabold text-center text-red-500 drop-shadow-lg">
+				<h1 className="mb-4 text-5xl font-extrabold text-center text-[#D2758F] drop-shadow-lg">
 					🔥 Packdraw Monthly Leaderboard 🔥
 				</h1>
 
 				<p className="mb-2 text-center text-gray-400">
-					Range: <span className="text-red-400">{getDisplayRange()}</span>
+					Range: <span className="text-[#D2758F]">{getDisplayRange()}</span>
 				</p>
 
 				<p className="mb-6 font-semibold text-center text-gray-300 text-md">
@@ -95,7 +95,7 @@ const PackdrawPage = () => {
 				</p>
 
 				<div className="mt-2 text-center text-gray-400">
-					<p className="text-lg font-semibold text-red-400">
+					<p className="text-lg font-semibold text-[#D2758F]">
 						Total Prize Pool: 500 $ 💰
 					</p>
 					<p>
@@ -105,13 +105,13 @@ const PackdrawPage = () => {
 				</div>
 
 				{loading && <p className="mt-10 text-center text-gray-400">Loading...</p>}
-				{error && <p className="mt-10 text-center text-red-500">{error}</p>}
+				{error && <p className="mt-10 text-center text-[#D2758F]">{error}</p>}
 
 				{/* ✅ FIXED LEADERBOARD */}
 				{!loading && !error && monthlyData.length > 0 && (
 					<div className="mt-8 overflow-x-auto">
-						<table className="min-w-full text-sm bg-gray-900 border border-red-600 shadow-xl rounded-2xl">
-							<thead className="text-white bg-gradient-to-r from-red-700 to-black">
+						<table className="min-w-full text-sm bg-gray-900 border border-[#D2758F] shadow-xl rounded-2xl">
+							<thead className="text-white bg-gradient-to-r from-[#381835] to-black">
 								<tr>
 									<th className="p-3 text-left uppercase">#</th>
 									<th className="p-3 text-left uppercase">Name</th>
@@ -129,17 +129,17 @@ const PackdrawPage = () => {
 											key={index}
 											className={`transition-all ${
 												rank <= 3
-													? "bg-red-800/60 hover:bg-red-700"
+													? "bg-[#381835]/60 hover:bg-[#D2758F]"
 													: rank % 2 === 0
 													? "bg-gray-800"
 													: "bg-gray-900"
 											} hover:text-white`}
 										>
-											<td className="p-3 font-bold text-red-500">#{rank}</td>
+											<td className="p-3 font-bold text-[#D2758F]">#{rank}</td>
 											<td className="p-3 font-medium">{entry.username}</td>
 
 											{/* ✔ Correct field from API: wagerAmount */}
-											<td className="p-3 font-semibold text-red-400">
+											<td className="p-3 font-semibold text-[#D2758F]">
 												{entry.wagerAmount.toLocaleString(undefined, {
 													maximumFractionDigits: 2,
 												})}
