@@ -195,15 +195,16 @@ export function Navbar() {
 			{/* Mobile Dropdown Menu */}
 			{isMobile && (
 				<div
-					className={`fixed inset-0 bg-black/80 backdrop-blur-sm z-40 transition-opacity duration-300 ${
+					className={`fixed inset-0 z-[80] transition-opacity duration-300 ${
 						isOpen
 							? "opacity-100 pointer-events-auto"
 							: "opacity-0 pointer-events-none"
 					}`}
 					onClick={() => setIsOpen(false)}
 				>
+					<div className='absolute inset-0 bg-[#0E0D1D]' />
 					<div
-						className={`absolute top-0 right-0 w-72 bg-gradient-to-b from-[#0E0D1D] to-[#1a191f] h-full shadow-2xl py-6 px-6 flex flex-col space-y-4 transform transition-transform duration-300 ${
+						className={`absolute top-0 right-0 w-full max-w-sm bg-gradient-to-b from-[#0E0D1D] to-[#1a191f] h-dvh shadow-2xl border-l border-[#D2758F]/30 py-6 px-6 flex flex-col space-y-4 transform transition-transform duration-300 ${
 							isOpen ? "translate-x-0" : "translate-x-full"
 						}`}
 						onClick={(e) => e.stopPropagation()}
@@ -217,7 +218,7 @@ export function Navbar() {
 										className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${
 											location.pathname === item.path
 												? "bg-[#D2758F] text-white shadow-lg"
-												: "hover:bg-[#D2758F]/20 hover:text-[#D2758F]"
+												: "bg-[#1a1222] text-[#FEFDDE] hover:bg-[#381835] hover:text-[#D2758F]"
 										}`}
 									>
 										{item.icon}
