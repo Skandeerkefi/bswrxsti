@@ -40,7 +40,7 @@ export const useClashStore = create<ClashState>((set) => ({
 
     try {
       const { data } = await axios.get(
-        "http://localhost:3000/api/leaderboard/clash/leaderboards"
+        "https://bswrxstidata-production.up.railway.app/api/leaderboard/clash/leaderboards"
       );
 
       // Convert startDate/endDate strings to Date objects

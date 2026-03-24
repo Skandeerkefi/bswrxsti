@@ -78,7 +78,7 @@ export const useRoobetStore = create<RoobetStore>((set) => ({
 			const { startDate, endDate } = periodInfo;
 			set({ periodInfo });
 
-			let url = `http://localhost:3000/api/leaderboard/${startDate}/${endDate}`;
+			let url = `https://bswrxstidata-production.up.railway.app/api/leaderboard/${startDate}/${endDate}`;
 
 			const response = await axios.get(url);
 

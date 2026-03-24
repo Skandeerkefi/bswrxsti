@@ -27,7 +27,7 @@ interface LeaderboardState {
 }
 
 const API_URL =
-	"http://localhost:3000/api/affiliates";
+	"https://bswrxstidata-production.up.railway.app/api/affiliates";
 
 /**
  * Calculate bi-weekly period dates
