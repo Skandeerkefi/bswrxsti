@@ -113,7 +113,7 @@ function SignupPage() {
 								</Label>
 								<Input
 									id='rainbetUsername'
-									placeholder='Enter your Rainbet username'
+									placeholder='Enter your Roobet username'
 									value={rainbetUsername}
 									onChange={(e) => setRainbetUsername(e.target.value)}
 									required
