@@ -84,7 +84,7 @@ function SignupPage() {
 							</CardTitle>
 						</div>
 						<CardDescription className='text-center text-[#0E0D1D]'>
-							Enter your Kick and Rainbet usernames to register and join the
+							Enter your Kick and Roobet usernames to register and join the
 							community
 						</CardDescription>
 					</CardHeader>
