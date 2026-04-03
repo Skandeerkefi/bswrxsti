@@ -86,7 +86,7 @@ function GiveawaysPage() {
 
 				<div className='p-6 mb-8 rounded-lg bg-[#0E0D1D] border border-[#D2758F]'>
 					<p className='mb-6 text-[#FEFDDE]'>
-						Join MisterTee&apos;s exciting giveaways for a chance to win real
+						Join Bswrxsti&apos;s exciting giveaways for a chance to win real
 						prizes! New opportunities every week.
 					</p>
 
