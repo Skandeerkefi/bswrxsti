@@ -32,7 +32,7 @@ export function Footer() {
 								Home
 							</Link>
 							<Link
-								to='/leaderboard'
+								to='/leaderboards'
 								className='text-sm text-white/70 transition-colors hover:text-[#D2758F]'
 							>
 								Leaderboard
@@ -100,7 +100,7 @@ export function Footer() {
 						<h4 className='text-lg font-bold text-[#D2758F] mb-2'>
 							BEWARE GAMBLING
 						</h4>
-						<p className='text-sm text-white/80 leading-relaxed'>
+						<p className='text-sm leading-relaxed text-white/80'>
 							We are not responsible for illegal gambling activities.
 							<br />
 							Play responsibly — gambling involves financial risks.
