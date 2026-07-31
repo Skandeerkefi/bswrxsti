@@ -39,14 +39,43 @@ interface RoobetStore {
 /**
  * Calculate bi-weekly period dates for Roobet leaderboard
  * Started: March 21, 2026 12am EST
- * Auto-resets every 14 days
+ * Auto-resets every 14 days, with a special period ending August 19, 2026
  */
 const getBiWeeklyPeriod = (): PeriodInfo => {
 	// Reference start: March 21, 2026 12am EST = March 21, 2026 5am UTC
 	const referenceStart = dayjs("2026-03-21T05:00:00Z").utc();
 	const now = dayjs().utc();
 
-	// Calculate which bi-weekly period we're in
+	const specialEndDate = dayjs("2026-08-19T23:59:59Z").utc();
+	const specialPeriodStart = dayjs("2026-07-25T05:00:00Z").utc();
+	const postSpecialStart = dayjs("2026-08-20T05:00:00Z").utc();
+
+	// If we're past the special period end, use normal biweekly from Aug 20
+	if (now.isAfter(specialEndDate)) {
+		const diffDays = now.diff(postSpecialStart, "day", true);
+		const periodNumber = Math.floor(diffDays / 14);
+		const start = postSpecialStart.add(periodNumber * 14, "day");
+		const end = start.add(14, "day").subtract(1, "second");
+		return {
+			startDate: start.format("YYYY-MM-DD"),
+			endDate: end.format("YYYY-MM-DD"),
+			start,
+			end,
+		};
+	}
+
+	// If we're in the special period (between its start and end), extend to Aug 19
+	if (now.isAfter(specialPeriodStart) && now.isBefore(specialEndDate)) {
+		const start = specialPeriodStart;
+		return {
+			startDate: start.format("YYYY-MM-DD"),
+			endDate: "2026-08-19",
+			start,
+			end: specialEndDate,
+		};
+	}
+
+	// Normal bi-weekly calculation
 	const diffDays = now.diff(referenceStart, "day", true);
 	const periodNumber = Math.floor(diffDays / 14);
 
