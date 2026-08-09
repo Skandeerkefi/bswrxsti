@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { apiUrl } from "@/lib/apiBase";
 
 export type LeaderboardPeriod = "biweekly";
 
@@ -26,8 +27,7 @@ interface LeaderboardState {
 	fetchLeaderboard: () => Promise<void>;
 }
 
-const API_URL =
-	"https://bswrxstidata-production.up.railway.app/api/affiliates";
+const API_URL = apiUrl("/api/affiliates");
 
 /**
  * Calculate bi-weekly period dates

@@ -17,6 +17,9 @@ import RainPage from "@/pages/RainPage";
 import CSGOLeadPage from "./pages/CSGOLead";
 import PackdrawPage from "./pages/PackdrawPage";
 import ClashLeaderboardPage from "./pages/ClashLeaderboardPage";
+import SlotChallengesPage from "./pages/SlotChallengesPage";
+import SlotChallengeDetailPage from "./pages/SlotChallengeDetailPage";
+import AdminSlotChallengesPage from "./pages/AdminSlotChallengesPage";
 function App() {
 	const loadFromStorage = useAuthStore((state) => state.loadFromStorage);
 	const user = useAuthStore((state) => state.user);
@@ -43,7 +46,7 @@ function App() {
 					<Route path='/slot-calls' element={<SlotCallsPage />} />
 					<Route path='/giveaways' element={<GiveawaysPage />} />
 					<Route path='/login' element={<LoginPage />} />
-					<Route path='/signup' element={<SignupPage />} />s
+					<Route path='/signup' element={<SignupPage />} />
 					<Route path='*' element={<NotFoundPage />} />
 					<Route path='/slot-overlay' element={<SlotOverlay />} />
 					<Route path='/bonus-hunt' element={<BonusHuntPage />} />
@@ -51,6 +54,9 @@ function App() {
 					<Route path='/rain' element={<RainPage />} />
 					<Route path='/clash' element={<ClashLeaderboardPage />} />
 					<Route path='/packdraw' element={<PackdrawPage />} />
+					<Route path='/slot-challenges' element={<SlotChallengesPage />} />
+					<Route path='/slot-challenges/:id' element={<SlotChallengeDetailPage />} />
+					<Route path='/admin/slot-challenges' element={<AdminSlotChallengesPage />} />
 				</Routes>
 			</BrowserRouter>
 			<Toaster />

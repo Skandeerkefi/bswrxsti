@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import axios from "axios";
 import dayjs from "dayjs";
+import { apiUrl } from "@/lib/apiBase";
 
 import utc from "dayjs/plugin/utc";
 
@@ -107,7 +108,7 @@ export const useRoobetStore = create<RoobetStore>((set) => ({
 			const { startDate, endDate } = periodInfo;
 			set({ periodInfo });
 
-			let url = `https://bswrxstidata-production.up.railway.app/api/leaderboard/${startDate}/${endDate}`;
+			let url = `${apiUrl(`/api/leaderboard/${startDate}/${endDate}`)}`;
 
 			const response = await axios.get(url);
 

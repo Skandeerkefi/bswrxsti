@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { apiUrl } from "@/lib/apiBase";
 
 interface User {
 	id: string;
@@ -32,7 +33,7 @@ interface AuthState {
 	loadFromStorage: () => void;
 }
 
-export const useAuthStore = create<AuthState>((set, get) => ({
+export const useAuthStore = create<AuthState>((set) => ({
 	user: null,
 	token: null,
 	isLoading: false,
@@ -43,15 +44,11 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 
 	login: async (kickUsername, password) => {
 		try {
-			const res = await fetch(
-				"https://bswrxstidata-production.up.railway.app/api/auth/login",
-				// "https://pnpplxprssdata.onrender.com/api/auth/login",
-				{
+			const res = await fetch(apiUrl("/api/auth/login"), {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({ kickUsername, password }),
-				}
-			);
+			});
 
 			if (!res.ok) {
 				const data = await res.json();
@@ -70,19 +67,17 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 			localStorage.setItem("user", JSON.stringify(data.user));
 
 			return { success: true };
-		} catch (error: any) {
+		} catch (error: unknown) {
+			const message = error instanceof Error ? error.message : "Login failed";
 			console.error("❌ Login error:", error);
-			return { success: false, error: error.message };
+			return { success: false, error: message };
 		}
 	},
 
 	signup: async (kickUsername, rainbetUsername, password, confirmPassword) => {
 		set({ isLoading: true });
 		try {
-			const res = await fetch(
-				// "https://pnpplxprssdata.onrender.com/api/auth/register",
-				"https://bswrxstidata-production.up.railway.app/api/auth/register",
-				{
+			const res = await fetch(apiUrl("/api/auth/register"), {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({
@@ -91,8 +86,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 						password,
 						confirmPassword,
 					}),
-				}
-			);
+			});
 
 			if (!res.ok) {
 				const data = await res.json();
@@ -101,9 +95,9 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 
 			set({ isLoading: false });
 			return true;
-		} catch (error: any) {
+		} catch (error: unknown) {
 			set({ isLoading: false });
-			throw error;
+			throw error instanceof Error ? error : new Error("Signup failed");
 		}
 	},
 

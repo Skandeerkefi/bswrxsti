@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { useAuthStore } from "./useAuthStore";
+import { apiUrl } from "@/lib/apiBase";
 
 export type SlotCallStatus = "pending" | "accepted" | "rejected" | "played";
 
@@ -42,18 +43,15 @@ export const useSlotCallStore = create<SlotCallState>((set, get) => ({
 
 		set({ isSubmitting: true });
 		try {
-			const res = await fetch(
-				"https://bswrxstidata-production.up.railway.app/api/slot-calls",
-				{
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: `Bearer ${token}`,
-					},
-					body: JSON.stringify({ name: slotName }),
-					credentials: "include",
-				}
-			);
+			const res = await fetch(apiUrl("/api/slot-calls"), {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+				body: JSON.stringify({ name: slotName }),
+				credentials: "include",
+			});
 
 			if (!res.ok) {
 				const data = await res.json();
@@ -91,18 +89,15 @@ export const useSlotCallStore = create<SlotCallState>((set, get) => ({
 		if (!token) return { success: false, error: "Not authenticated" };
 
 		try {
-			const res = await fetch(
-				`https://bswrxstidata-production.up.railway.app/api/slot-calls/${id}/bonus-call`,
-				{
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: `Bearer ${token}`,
-					},
-					body: JSON.stringify({ name: slotName }),
-					credentials: "include",
-				}
-			);
+			const res = await fetch(apiUrl(`/api/slot-calls/${id}/bonus-call`), {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+				body: JSON.stringify({ name: slotName }),
+				credentials: "include",
+			});
 
 			if (!res.ok) {
 				const data = await res.json();
@@ -126,18 +121,15 @@ export const useSlotCallStore = create<SlotCallState>((set, get) => ({
 		if (!token) return { success: false, error: "Not authenticated" };
 
 		try {
-			const res = await fetch(
-				`https://bswrxstidata-production.up.railway.app/api/slot-calls/${id}/status`,
-				{
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: `Bearer ${token}`,
-					},
-					body: JSON.stringify({ status, x250Hit }),
-					credentials: "include",
-				}
-			);
+			const res = await fetch(apiUrl(`/api/slot-calls/${id}/status`), {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+				body: JSON.stringify({ status, x250Hit }),
+				credentials: "include",
+			});
 
 			if (!res.ok) {
 				const data = await res.json();
@@ -168,16 +160,13 @@ export const useSlotCallStore = create<SlotCallState>((set, get) => ({
 		if (!token) return { success: false, error: "Not authenticated" };
 
 		try {
-			const res = await fetch(
-				`https://bswrxstidata-production.up.railway.app/api/slot-calls/${id}`,
-				{
-					method: "DELETE",
-					headers: {
-						Authorization: `Bearer ${token}`,
-					},
-					credentials: "include",
-				}
-			);
+			const res = await fetch(apiUrl(`/api/slot-calls/${id}`), {
+				method: "DELETE",
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+				credentials: "include",
+			});
 
 			if (!res.ok) {
 				const data = await res.json();
@@ -200,8 +189,8 @@ export const useSlotCallStore = create<SlotCallState>((set, get) => ({
 
 		const url =
 			userRole === "admin"
-				? "https://bswrxstidata-production.up.railway.app/api/slot-calls"
-				: "https://bswrxstidata-production.up.railway.app/api/slot-calls/my";
+				? apiUrl("/api/slot-calls")
+				: apiUrl("/api/slot-calls/my");
 
 		try {
 			const res = await fetch(url, {
