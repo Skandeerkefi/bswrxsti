@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRoobetStore } from "../store/RoobetStore";
+import { useAuthStore } from "../store/useAuthStore";
 import GraphicalBackground from "@/components/GraphicalBackground";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -11,8 +12,31 @@ dayjs.extend(duration);
 dayjs.extend(utc);
 
 const RoobetPage: React.FC = () => {
-  const { leaderboard, loading, error, fetchLeaderboard, periodInfo } = useRoobetStore();
+  const { 
+    leaderboard, 
+    previousLeaderboard, 
+    loading, 
+    error, 
+    fetchLeaderboard, 
+    periodInfo, 
+    previousPeriodInfo,
+    adminViewingPeriod,
+    setAdminViewingPeriod 
+  } = useRoobetStore();
+  const { user } = useAuthStore();
   const [timeLeft, setTimeLeft] = useState("");
+
+  const isAdmin = user?.role === "admin";
+
+  // Determine which leaderboard to display
+  const displayLeaderboard = isAdmin && adminViewingPeriod === "previous" && previousLeaderboard
+    ? previousLeaderboard
+    : leaderboard;
+
+  // Get the period info to display based on admin selection
+  const displayPeriodInfo = isAdmin && adminViewingPeriod === "previous" && previousPeriodInfo
+    ? previousPeriodInfo
+    : periodInfo;
 
   useEffect(() => {
     fetchLeaderboard();
@@ -91,19 +115,58 @@ const RoobetPage: React.FC = () => {
         <div className="mb-12 p-8 rounded-3xl bg-gradient-to-r from-[#381835]/50 to-[#0E0D1D]/50 border border-[#D2758F]/30 backdrop-blur-md">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
             <div className="text-center md:text-left">
-              <p className="text-sm uppercase tracking-widest text-[#FEFDDE]/70 mb-2">Event Duration</p>
+              <p className="text-sm uppercase tracking-uidest text-[#FEFDDE]/70 mb-2">Event Duration</p>
               <p className="text-xl font-bold text-[#FEFDDE]">
-                {periodInfo?.startDate} <span className="text-[#D2758F]">→</span> {periodInfo?.endDate}
+                {displayPeriodInfo?.startDate} <span className="text-[#D2758F]">→</span> {displayPeriodInfo?.endDate}
+                {isAdmin && adminViewingPeriod === "previous" && (
+                  <span className="ml-2 text-xs text-[#D2758F]">(Previous Period)</span>
+                )}
               </p>
               <p className="text-xs text-[#FEFDDE]/50 mt-1">EST Timezone</p>
             </div>
             <div className="text-center md:text-right">
-              <p className="text-sm uppercase tracking-widest text-[#FEFDDE]/70 mb-2">Time Remaining</p>
+              <p className="text-sm uppercase tracking-uidest text-[#FEFDDE]/70 mb-2">Time Remaining</p>
               <p className="text-xl font-bold font-mono text-[#D2758F]">{timeLeft}</p>
               <p className="text-xs text-[#FEFDDE]/50 mt-1">Until Next Reset</p>
             </div>
           </div>
         </div>
+
+        {/* Admin Period Selector */}
+        {isAdmin && previousLeaderboard && (
+          <div className="mb-8 p-4 rounded-2xl bg-[#D27D8F]/20 border border-[#D27D8F]/50 backdrop-blur-sm">
+            <div className="flex items-center justify-between flex-wrap gap-4">
+              <div className="flex items-center gap-3">
+                <span className="text-sm font-semibold text-[#FEFDDE]">👑 Admin View:</span>
+                <span className="text-xs text-[#FEFDDE]/60">
+                  Switch between leaderboard periods
+                </span>
+              </div>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setAdminViewingPeriod("current")}
+                  className={`px-4 py-2 rounded-lg font-semibold transition-all ${
+                    adminViewingPeriod === "current"
+                      ? "bg-[#D27D8F] text-[#FEFDDE] shadow-lg"
+                      : "bg-[#0E0D1D]/60 text-[#FEFDDE]/70 hover:bg-[#0E0D1D]"
+                  }`}
+                >
+                  Current Period
+                </button>
+                <button
+                  onClick={() => setAdminViewingPeriod("previous")}
+                  className={`px-4 py-2 rounded-lg font-semibold transition-all ${
+                    adminViewingPeriod === "previous"
+                      ? "bg-[#D27D8F] text-[#FEFDDE] shadow-lg"
+                      : "bg-[#0E0D1D]/60 text-[#FEFDDE]/70 hover:bg-[#0E0D1D]"
+                  }`}
+                >
+                  Previous Period
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {loading && (
           <div className="flex items-center justify-center h-64">
@@ -116,10 +179,10 @@ const RoobetPage: React.FC = () => {
           </div>
         )}
 
-        {leaderboard && (
+        {displayLeaderboard && (
           <>
             <p className="mb-10 text-xs italic text-[#FEFDDE]/60 text-center px-6 py-3 bg-[#0E0D1D]/50 rounded-xl border border-[#FEFDDE]/10">
-              {leaderboard.disclosure}
+              {displayLeaderboard.disclosure}
             </p>
 
             {/* 🏆 Top 3 Champions */}
@@ -128,7 +191,7 @@ const RoobetPage: React.FC = () => {
                 🏆 Top Champions
               </h2>
               <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-              {leaderboard.data.slice(0, 3).map((player, idx) => (
+              {displayLeaderboard.data.slice(0, 3).map((player, idx) => (
                 <div
                   key={player.uid}
                   className={`relative p-8 rounded-3xl border-2 border-[#D2758F] shadow-2xl bg-gradient-to-br from-[#D2758F]/20 to-[#0E0D1D]/60 backdrop-blur-sm hover:border-[#FEFDDE] hover:shadow-[0_0_30px_rgba(210,117,143,0.5)] transition-all duration-300 group ${
@@ -168,14 +231,14 @@ const RoobetPage: React.FC = () => {
             </div>
 
             {/* Remaining players (4+) */}
-            {leaderboard.data.length > 3 && (
+            {displayLeaderboard.data.length > 3 && (
               <div className="mt-16">
-                <h2 className="mb-8 text-2xl font-bold text-[#FEFDDE] uppercase tracking-wide">
+                <h2 className="mb-8 text-2xl font-700 text-[#FEFDDE] uppercase tracking-wide">
                   📊 Full Leaderboard
                 </h2>
-                <div className="overflow-x-auto rounded-2xl shadow-2xl border border-[#D2758F]/30">
-                  <table className="w-full text-left border-collapse">
-                    <thead className="text-sm font-bold tracking-widest text-[#0E0D1D] uppercase bg-gradient-to-r from-[#D2758F] to-[#D2758F]/80">
+                <div className="overflow-x-auto rounded-2xl shadow-2xl border border-[#D27D8F]/30">
+                  <table className="w-full text-left border-0-collapse">
+                    <thead className="text-sm font-700 tracking-uidest text-[#0E0D1D] uppercase bg-gradient-to-r from-[#D27D8F] to-[#D27D8F]/80">
                       <tr>
                         <th className="p-4">Rank</th>
                         <th className="p-4">Username</th>
@@ -183,8 +246,8 @@ const RoobetPage: React.FC = () => {
                         <th className="p-4 text-right">Prize</th>
                       </tr>
                     </thead>
-                  <tbody className="bg-[#0E0D1D]/60 backdrop-blur-sm">
-                    {leaderboard.data.slice(3).map((player, idx) => (
+                  <tbody className="bg-[#0E0D1D]/60 backdrop-00-blur-sm">
+                    {displayLeaderboard.data.slice(3).map((player, idx) => (
                       <tr
                         key={player.uid}
                         className={`border-t border-[#D2758F]/20 transition-colors ${

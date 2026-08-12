@@ -31,9 +31,13 @@ interface PeriodInfo {
 
 interface RoobetStore {
 	leaderboard: LeaderboardData | null;
+	previousLeaderboard: LeaderboardData | null;
 	loading: boolean;
 	error: string | null;
 	periodInfo: PeriodInfo | null;
+	previousPeriodInfo: PeriodInfo | null;
+	adminViewingPeriod: "current" | "previous";
+	setAdminViewingPeriod: (period: "current" | "previous") => void;
 	fetchLeaderboard: () => Promise<void>;
 }
 
@@ -94,11 +98,31 @@ const getBiWeeklyPeriod = (): PeriodInfo => {
 	};
 };
 
+/**
+ * Calculate bi-weekly period dates for Roobet leaderboard
+ * For previous period, we go back one cycle (14 days)
+ */
+const getPreviousPeriod = (currentPeriod: PeriodInfo): PeriodInfo => {
+	const start = currentPeriod.start.subtract(14, "day");
+	const end = start.add(14, "day").subtract(1, "second");
+	return {
+		startDate: start.format("YYYY-MM-DD"),
+		endDate: end.format("YYYY-MM-DD"),
+		start,
+		end,
+	};
+};
+
 export const useRoobetStore = create<RoobetStore>((set) => ({
 	leaderboard: null,
+	previousLeaderboard: null,
 	loading: false,
 	error: null,
 	periodInfo: null,
+	previousPeriodInfo: null,
+	adminViewingPeriod: "current",
+
+	setAdminViewingPeriod: (period) => set({ adminViewingPeriod: period }),
 
 	fetchLeaderboard: async () => {
 		set({ loading: true, error: null });
@@ -108,27 +132,60 @@ export const useRoobetStore = create<RoobetStore>((set) => ({
 			const { startDate, endDate } = periodInfo;
 			set({ periodInfo });
 
-			let url = `${apiUrl(`/api/leaderboard/${startDate}/${endDate}`)}`;
+			// Fetch current period leaderboard
+			const currentUrl = `${apiUrl(`/api/leaderboard/${startDate}/${endDate}`)}`;
+			const currentResponse = await axios.get(currentUrl);
 
-			const response = await axios.get(url);
-
-			const updatedData: LeaderboardData = {
-				disclosure: response.data.disclosure,
-				data: response.data.data.map((player: any, index: number) => ({
-					uid: player.uid,
-					username: player.username,
-					wagered: player.wagered,
-					weightedWagered: player.weightedWagered,
-					favoriteGameId: player.favoriteGameId,
-					favoriteGameTitle: player.favoriteGameTitle,
+			const currentData: LeaderboardData = {
+				disclosure: currentResponse.data.disclosure,
+				data: currentResponse.data.data.map((player: Record<string, unknown>, index: number) => ({
+					uid: player.uid as string,
+					username: player.username as string,
+					wagered: player.wagered as number,
+					weightedWagered: player.weightedWagered as number,
+					favoriteGameId: player.favoriteGameId as string,
+					favoriteGameTitle: player.favoriteGameTitle as string,
 					rankLevel: index + 1,
 				})),
 			};
 
-			set({ leaderboard: updatedData, loading: false });
-		} catch (err: any) {
+			// Fetch previous period leaderboard for admin access
+			const previousPeriod = getPreviousPeriod(periodInfo);
+			set({ previousPeriodInfo: previousPeriod });
+
+			const prevUrl = `${apiUrl(`/api/leaderboard/${previousPeriod.startDate}/${previousPeriod.endDate}`)}`;
+			let previousData: LeaderboardData | null = null;
+			
+			try {
+				const prevResponse = await axios.get(prevUrl);
+				previousData = {
+					disclosure: prevResponse.data.disclosure,
+					data: prevResponse.data.data.map((player: Record<string, unknown>, index: number) => ({
+						uid: player.uid as string,
+						username: player.username as string,
+						wagered: player.wagered as number,
+						weightedWagered: player.weightedWagered as number,
+						favoriteGameId: player.favoriteGameId as string,
+						favoriteGameTitle: player.favoriteGameTitle as string,
+						rankLevel: index + 1,
+					})),
+				};
+			} catch {
+				// Previous period might not exist yet
+				previousData = null;
+			}
+
+			set({ 
+				leaderboard: currentData, 
+				previousLeaderboard: previousData,
+				loading: false 
+			});
+		} catch (err: unknown) {
+			const errorMessage = err && typeof err === 'object' && 'response' in err 
+				? (err as { response?: { data?: { error?: string } } }).response?.data?.error || "Failed to fetch leaderboard"
+				: "Failed to fetch leaderboard";
 			set({
-				error: err.response?.data?.error || "Failed to fetch leaderboard",
+				error: errorMessage,
 				loading: false,
 			});
 		}
