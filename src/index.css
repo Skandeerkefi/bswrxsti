@@ -1,0 +1,162 @@
+/**
+ * **IMPORTANT** Never break the original structure, only add highly customized new styles
+ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.animate-float {
+	animation: float infinite ease-in-out;
+}
+
+.animate-float {
+	animation: float 6s ease-in-out infinite;
+}
+/* Add to your global CSS or tailwind.css */
+@keyframes spin-slow {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+.animate-spin-slow {
+	animation: spin-slow 60s linear infinite;
+}
+
+@layer base {
+	:root {
+		--background: 244 39% 8%;
+		--foreground: 58 94% 93%;
+		--card: 318 40% 16%;
+		--card-foreground: 58 94% 93%;
+		--popover: 244 39% 8%;
+		--popover-foreground: 58 94% 93%;
+		--primary: 339 51% 64%;
+		--primary-foreground: 58 94% 93%;
+		--secondary: 318 40% 16%;
+		--secondary-foreground: 58 94% 93%;
+		--muted: 318 40% 16%;
+		--muted-foreground: 58 60% 80%;
+		--accent: 339 51% 64%;
+		--accent-foreground: 58 94% 93%;
+		--destructive: 339 51% 64%;
+		--destructive-foreground: 58 94% 93%;
+		--border: 318 40% 16%;
+		--input: 318 40% 16%;
+		--ring: 339 51% 64%;
+		--chart-1: 339 51% 64%;
+		--chart-2: 318 40% 16%;
+		--chart-3: 58 94% 93%;
+		--chart-4: 244 39% 8%;
+		--chart-5: 339 51% 64%;
+		--radius: 0.5rem;
+		--sidebar-background: 244 39% 8%;
+		--sidebar-foreground: 58 94% 93%;
+		--sidebar-primary: 339 51% 64%;
+		--sidebar-primary-foreground: 58 94% 93%;
+		--sidebar-accent: 318 40% 16%;
+		--sidebar-accent-foreground: 58 94% 93%;
+		--sidebar-border: 318 40% 16%;
+		--sidebar-ring: 339 51% 64%;
+
+		/* 5MOKING custom colors */
+		--brand-purple: 339 51% 64%;
+		--brand-blue: 339 51% 64%;
+		--brand-dark: 244 39% 8%;
+		--brand-white: 58 94% 93%;
+	}
+
+	.dark {
+		--background: 244 39% 8%;
+		--foreground: 58 94% 93%;
+		--card: 318 40% 16%;
+		--card-foreground: 58 94% 93%;
+		--popover: 244 39% 8%;
+		--popover-foreground: 58 94% 93%;
+		--primary: 339 51% 64%;
+		--primary-foreground: 58 94% 93%;
+		--secondary: 318 40% 16%;
+		--secondary-foreground: 58 94% 93%;
+		--muted: 318 40% 16%;
+		--muted-foreground: 58 60% 80%;
+		--accent: 339 51% 64%;
+		--accent-foreground: 58 94% 93%;
+		--destructive: 339 51% 64%;
+		--destructive-foreground: 58 94% 93%;
+		--border: 318 40% 16%;
+		--input: 318 40% 16%;
+		--ring: 339 51% 64%;
+		--chart-1: 339 51% 64%;
+		--chart-2: 318 40% 16%;
+		--chart-3: 58 94% 93%;
+		--chart-4: 244 39% 8%;
+		--chart-5: 339 51% 64%;
+		--sidebar-background: 244 39% 8%;
+		--sidebar-foreground: 58 94% 93%;
+		--sidebar-primary: 339 51% 64%;
+		--sidebar-primary-foreground: 58 94% 93%;
+		--sidebar-accent: 318 40% 16%;
+		--sidebar-accent-foreground: 58 94% 93%;
+		--sidebar-border: 318 40% 16%;
+		--sidebar-ring: 339 51% 64%;
+	}
+}
+
+@layer base {
+	* {
+		@apply border-border;
+	}
+	body {
+		@apply bg-background text-foreground dark;
+	}
+}
+
+@layer utilities {
+	.gradient-text {
+		@apply bg-gradient-to-r from-[#381835] to-[#D2758F] bg-clip-text text-transparent;
+	}
+
+	.glass-card {
+		@apply border shadow-lg bg-card/80 backdrop-blur-sm border-black/20;
+	}
+
+	.nav-link {
+		@apply px-3 py-2 text-sm transition-colors rounded-md hover:bg-primary/20;
+	}
+
+	.nav-link-active {
+		@apply text-white bg-primary/20;
+	}
+}
+@keyframes neon-flicker {
+	0%,
+	19%,
+	21%,
+	23%,
+	25%,
+	54%,
+	56%,
+	100% {
+		text-shadow: 0 0 4px #D2758F, 0 0 11px #D2758F, 0 0 19px #D2758F,
+			0 0 40px #D2758F, 0 0 80px #D2758F;
+		color: #0E0D1D;
+	}
+	20%,
+	22%,
+	24%,
+	55% {
+		text-shadow: none;
+		color: #381835;
+	}
+}
+
+.neon-text {
+	animation: neon-flicker 2.5s infinite alternate;
+	color: #D2758F;
+	text-shadow: 0 0 5px #D2758F, 0 0 10px #D2758F, 0 0 20px #D2758F,
+		0 0 40px #D2758F, 0 0 80px #D2758F;
+	user-select: none;
+}
