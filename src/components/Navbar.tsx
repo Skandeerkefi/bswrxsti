@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Dices, Crown, Gift, Users, LogIn, User, LogOut, Trophy, Settings } from "lucide-react";
+import { Dices, Crown, Gift, Users, LogIn, User, LogOut, Trophy, Settings, ChevronDown } from "lucide-react";
 import useMediaQuery from "@/hooks/use-media-query";
 import { useAuthStore } from "@/store/useAuthStore";
 
@@ -10,6 +10,7 @@ export function Navbar() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isLive, setIsLive] = useState(false);
 	const [viewerCount, setViewerCount] = useState<number | null>(null);
+	const [isAdminDropdownOpen, setIsAdminDropdownOpen] = useState(false);
 
 	const { user, logout } = useAuthStore();
 
@@ -85,14 +86,35 @@ const menuItems = [
 					<div className="flex items-center gap-2 lg:gap-3 pl-4 lg:pl-6 border-l border-[#D2758F]/20">
 							{user ? (
 								<>
-									{user.role === 'admin' && (
-										<Link
-											to="/admin/slot-challenges"
-											className="hidden sm:flex items-center gap-2 text-[#D2758F] hover:text-[#FEFDDE] font-semibold transition text-xs lg:text-sm"
-										>
-											<Settings className="w-4 h-4" />
-											<span className="hidden lg:inline">Admin</span>
-										</Link>
+								{user.role === 'admin' && (
+										<div className="relative">
+											<button
+												onClick={() => setIsAdminDropdownOpen(!isAdminDropdownOpen)}
+												className="hidden sm:flex items-center gap-2 text-[#D2758F] hover:text-[#FEFDDE] font-semibold transition text-xs lg:text-sm"
+											>
+												<Settings className="w-4 h-4" />
+												<span className="hidden lg:inline">Admin</span>
+												<ChevronDown className={`w-3 h-3 transition-transform ${isAdminDropdownOpen ? 'rotate-180' : ''}`} />
+											</button>
+											{isAdminDropdownOpen && (
+												<div className="absolute right-0 mt-2 w-48 bg-[#1a191f] border border-[#D2758F]/30 rounded-xl shadow-xl py-2 z-50">
+													<Link
+														to="/admin/slot-challenges"
+														onClick={() => setIsAdminDropdownOpen(false)}
+														className="block px-4 py-2 text-sm text-[#FEFDDE] hover:bg-[#D2758F]/20 transition"
+													>
+														Slot Challenges
+													</Link>
+													<Link
+														to="/admin/leaderboard"
+														onClick={() => setIsAdminDropdownOpen(false)}
+														className="block px-4 py-2 text-sm text-[#FEFDDE] hover:bg-[#D2758F]/20 transition"
+													>
+														Leaderboard
+													</Link>
+												</div>
+											)}
+										</div>
 									)}
 									<Link
 										to="/profile"

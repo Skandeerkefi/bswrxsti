@@ -1,6 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useSlotChallengeStore, SlotChallenge } from '@/store/useSlotChallengeStore';
 import { X, Search, Trophy, Save, Trash2, RefreshCw } from 'lucide-react';
+
+// Helper function to extract gameId from URL
+// URL format: https://roobet.com/casino/game/hacksaw:1787
+// Returns: hacksaw:1787
+const extractGameIdFromUrl = (url: string): string | null => {
+  if (!url) return null;
+  const match = url.match(/\/game\/([^/]+)/);
+  return match ? match[1] : null;
+};
 
 interface SlotSearchResult {
   name?: string;
@@ -31,6 +40,7 @@ export default function AdminChallengeForm({ challenge, onClose, onSave }: Admin
     winnerSelectionMode: challenge?.winnerSelectionMode || 'firstComeFirstServed',
     startDate: challenge?.startDate ? new Date(challenge.startDate).toISOString().slice(0, 16) : new Date().toISOString().slice(0, 16),
     endDate: challenge?.endDate ? new Date(challenge.endDate).toISOString().slice(0, 16) : '',
+    gameId: challenge?.gameId || null, // Extracted from slot URL when selecting a game
   });
   
   const [searchQuery, setSearchQuery] = useState('');
@@ -63,11 +73,14 @@ export default function AdminChallengeForm({ challenge, onClose, onSave }: Admin
 
   const selectGame = (slot: SlotSearchResult) => {
     console.log("Selecting slot:", slot);
+    const gameId = extractGameIdFromUrl(slot.url || '');
+    console.log("Extracted gameId:", gameId);
     setFormData(prev => ({
       ...prev,
       gameTitle: slot.name || slot.title || '',
       gameImageUrl: slot.image || slot.img || '',
       gameProvider: slot.provider || '',
+      gameId: gameId,
     }));
     setShowSearchResults(false);
     setSearchQuery('');

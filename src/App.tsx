@@ -20,6 +20,7 @@ import ClashLeaderboardPage from "./pages/ClashLeaderboardPage";
 import SlotChallengesPage from "./pages/SlotChallengesPage";
 import SlotChallengeDetailPage from "./pages/SlotChallengeDetailPage";
 import AdminSlotChallengesPage from "./pages/AdminSlotChallengesPage";
+import LeaderboardAdminPanel from "./components/LeaderboardAdminPanel";
 function App() {
 	const loadFromStorage = useAuthStore((state) => state.loadFromStorage);
 	const user = useAuthStore((state) => state.user);
@@ -57,6 +58,7 @@ function App() {
 					<Route path='/slot-challenges' element={<SlotChallengesPage />} />
 					<Route path='/slot-challenges/:id' element={<SlotChallengeDetailPage />} />
 					<Route path='/admin/slot-challenges' element={<AdminSlotChallengesPage />} />
+					<Route path='/admin/leaderboard' element={<LeaderboardAdminPanel />} />
 				</Routes>
 			</BrowserRouter>
 			<Toaster />
